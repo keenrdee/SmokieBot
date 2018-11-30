@@ -1,0 +1,5 @@
+Command List:
+
+!iam [In-Game Nickname - Job]
+
+Job = Novice

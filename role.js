@@ -1,8 +1,9 @@
 const Discord = require('discord.js-commando');
+const fs = require('fs');
 const SMOKIE_BOT = new Discord.Client();
 
 //Invite the bot to a server
-// https://discordapp.com/api/oauth2/authorize?client_id=[Insert CLIENT_ID]&scope=bot&permissions=1
+// https://discordapp.com/api/oauth2/authorize?client_id=[Insert CLIENT_ID]&scope=bot&permissions=0
 const CLIENT_ID = process.env.ID;
 
 //private token to connect to the bot - DO NOT SHARE
@@ -12,12 +13,24 @@ SMOKIE_BOT.registry.registerGroup('nickname', 'Nickname');
 SMOKIE_BOT.registry.registerDefaults();
 SMOKIE_BOT.registry.registerCommandsIn(__dirname + '/commands');
 
-SMOKIE_BOT.on('message', function(message){
+var help_command = fs.readFileSync('text_files/help_command.txt','utf8'); //help command response
 
-    if(message.content == "help" & message.channel.type == "dm") return;
+SMOKIE_BOT.on('message', message => {
+
+    //Help command
+    if(message.content == "help")
+    {
+    if(message.channel.type == "dm") return;
+    else
+    {
+       message.channel.send(help_command);
+    }
+    }
+
+    //Greetings
     if(message.content.includes("Hi"))
     {
-        message.channel.sendMessage("Hello, " + message.author + 
+        message.channel.send("Hello, " + message.author + 
         "! Smokie leaves ain't for you");   
     }
    

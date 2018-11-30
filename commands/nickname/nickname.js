@@ -12,7 +12,15 @@ class NicknameEditor extends Discord.Command {
 
     async run(message, args) {
         if (message.channel.type == "dm") return;
-        message.guild.members.setNickname(args);
+
+        if (!args) {
+            message.channel.send("Please input your role name");
+        }
+        else {
+            let userId = message.member.id
+            console.log(userId);
+            message.guild.members.get(userId).setNickname(args, "iam command executed");
+        }
     }
 }
 
